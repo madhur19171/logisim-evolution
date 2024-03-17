@@ -24,10 +24,12 @@ public class ProjectAddIcon extends BaseIcon {
   };
   private boolean removeIcon = false;
   private boolean vhdl = false;
+  private boolean systemVerilog = false;
   private boolean deselect = false;
 
-  public ProjectAddIcon() {
-    vhdl = true;
+  public ProjectAddIcon(boolean vhdl, boolean systemVerilog) {
+    this.vhdl = vhdl;
+    this.systemVerilog = systemVerilog;
   }
 
   public ProjectAddIcon(boolean removeSymbol) {
@@ -56,6 +58,18 @@ public class ProjectAddIcon extends BaseIcon {
       l1 = new TextLayout("DL", f, g2.getFontRenderContext());
       top = (3 * AppPreferences.getIconSize()) / 4 - l1.getBounds().getCenterY();
       left = AppPreferences.getIconSize() / 2 - l1.getBounds().getCenterX();
+      l1.draw(g2, (float) left, (float) top);
+      g2.dispose();
+      return;
+    } else if (systemVerilog) {
+      g2.setColor(Color.GREEN.darker().darker());
+      final var f =
+              g2.getFont()
+                      .deriveFont((float) AppPreferences.getIconSize() / (float) 1.6)
+                      .deriveFont(Font.BOLD);
+      var l1 = new TextLayout("SV", f, g2.getFontRenderContext());
+      var top = AppPreferences.getIconSize() / 4 - l1.getBounds().getCenterY();
+      var left = AppPreferences.getIconSize() / 2 - l1.getBounds().getCenterX();
       l1.draw(g2, (float) left, (float) top);
       g2.dispose();
       return;

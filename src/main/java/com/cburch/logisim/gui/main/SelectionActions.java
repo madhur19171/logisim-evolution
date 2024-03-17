@@ -27,7 +27,7 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.std.base.Text;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

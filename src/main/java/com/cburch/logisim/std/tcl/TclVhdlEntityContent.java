@@ -9,7 +9,7 @@
 
 package com.cburch.logisim.std.tcl;
 
-import com.cburch.logisim.std.hdl.VhdlContentComponent;
+import com.cburch.logisim.std.hdl.vhdl.VhdlContentComponent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

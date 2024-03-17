@@ -23,7 +23,7 @@ public interface HdlGeneratorFactory {
   String BUS_NAME = Hdl.BUS_NAME;
   String CLOCK_TREE_NAME = "logisimClockTree";
   String VHDL = "VHDL";
-  String VERILOG = "Verilog";
+  String SYSTEM_VERILOG = "SystemVerilog";
   String LOCAL_INPUT_BUBBLE_BUS_NAME = "logisimInputBubbles";
   String LOCAL_OUTPUT_BUBBLE_BUS_NAME = "logisimOutputBubbles";
   String LOCAL_INOUT_BUBBLE_BUS_NAME = "logisimInOutBubbles";

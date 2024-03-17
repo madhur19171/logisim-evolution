@@ -103,7 +103,7 @@ public class WithSelectHdlGenerator {
     } else {
       contents.add("      default : {{regName}} = {{1}};", Hdl.getConstantVector(defaultValue, nrOfDestinationBits));
     }
-    if (Hdl.isVerilog())
+    if (Hdl.isSystemVerilog())
       contents.add("""
              endcase
           end

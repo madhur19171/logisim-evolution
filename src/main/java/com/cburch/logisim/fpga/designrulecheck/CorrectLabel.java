@@ -54,8 +54,8 @@ public class CorrectLabel {
         return errorIdentifierString + S.get("ReservedVHDLKeyword");
       }
     } else {
-      if (Hdl.isVerilog()) {
-        if (VERILOG_KEYWORDS.contains(label)) {
+      if (Hdl.isSystemVerilog()) {
+        if (SYSTEM_VERILOG_KEYWORDS.contains(label)) {
           return errorIdentifierString + S.get("ReservedVerilogKeyword");
         }
       }
@@ -66,7 +66,7 @@ public class CorrectLabel {
   public static String hdlCorrectLabel(String label) {
     if (label.isEmpty()) return null;
     if (Vhdl.VHDL_KEYWORDS.contains(label.toLowerCase())) return HdlGeneratorFactory.VHDL;
-    if (VERILOG_KEYWORDS.contains(label)) return HdlGeneratorFactory.VERILOG;
+    if (SYSTEM_VERILOG_KEYWORDS.contains(label)) return HdlGeneratorFactory.SYSTEM_VERILOG;
     return null;
   }
 
@@ -93,8 +93,8 @@ public class CorrectLabel {
     if (Hdl.isVhdl()) {
       return !Vhdl.VHDL_KEYWORDS.contains(Label.toLowerCase());
     } else {
-      if (Hdl.isVerilog()) {
-        return !VERILOG_KEYWORDS.contains(Label);
+      if (Hdl.isSystemVerilog()) {
+        return !SYSTEM_VERILOG_KEYWORDS.contains(Label);
       }
     }
     return true;
@@ -106,7 +106,7 @@ public class CorrectLabel {
     if (Vhdl.VHDL_KEYWORDS.contains(label.toLowerCase())) {
       ret = true;
       if (showDialog) OptionPane.showMessageDialog(null, S.get("VHDLKeywordNameError"));
-    } else if (VERILOG_KEYWORDS.contains(label.toLowerCase())) {
+    } else if (SYSTEM_VERILOG_KEYWORDS.contains(label.toLowerCase())) {
       if (showDialog) OptionPane.showMessageDialog(null, S.get("VerilogKeywordNameError"));
       ret = true;
     }
@@ -121,7 +121,7 @@ public class CorrectLabel {
   };
   private static final List<String> CHARS = Arrays.asList(ALLOWED_STRINGS);
 
-  private static final String[] RESERVED_VERILOG_WORDS = {
+  private static final String[] RESERVED_SYSTEM_VERILOG_WORDS = {
     "always",
     "ifnone",
     "rpmos",
@@ -246,5 +246,5 @@ public class CorrectLabel {
     "noshowcancelled"
   };
 
-  private static final List<String> VERILOG_KEYWORDS = Arrays.asList(RESERVED_VERILOG_WORDS);
+  private static final List<String> SYSTEM_VERILOG_KEYWORDS = Arrays.asList(RESERVED_SYSTEM_VERILOG_WORDS);
 }

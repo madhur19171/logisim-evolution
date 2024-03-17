@@ -23,6 +23,7 @@ import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.file.LogisimFileActions;
 import com.cburch.logisim.fpga.designrulecheck.CorrectLabel;
 import com.cburch.logisim.gui.generic.OptionPane;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogContent;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.proj.Project;
@@ -30,7 +31,7 @@ import com.cburch.logisim.std.wiring.Pin;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.util.SyntaxChecker;
-import com.cburch.logisim.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -145,6 +146,17 @@ public class ProjectCircuitActions {
     }
   }
 
+  public static void doAddSystemVerilog(Project proj) {
+    final var name = promptForSystemVerilogName(proj.getFrame(), proj.getLogisimFile(), "");
+    if (name != null) {
+      final var content = SystemVerilogContent.create(name, proj.getLogisimFile());
+      if (content != null) {
+        proj.doAction(LogisimFileActions.addSystemVerilog(content));
+        proj.setCurrentHdlModel(content);
+      }
+    }
+  }
+
   public static void doImportVhdl(Project proj) {
     final var vhdl = proj.getLogisimFile().getLoader().vhdlImportChooser(proj.getFrame());
     if (vhdl == null) return;
@@ -154,6 +166,18 @@ public class ProjectCircuitActions {
     if (VhdlContent.labelVHDLInvalidNotify(content.getName(), proj.getLogisimFile())) return;
 
     proj.doAction(LogisimFileActions.addVhdl(content));
+    proj.setCurrentHdlModel(content);
+  }
+
+  public static void doImportSystemVerilog(Project proj) {
+    final var systemVerilog = proj.getLogisimFile().getLoader().systemVerilogImportChooser(proj.getFrame());
+    if (systemVerilog == null) return;
+
+    final var content = SystemVerilogContent.parse(null, systemVerilog, proj.getLogisimFile());
+    if (content != null) return;
+    if (SystemVerilogContent.labelSystemVerilogInvalidNotify(content.getName(), proj.getLogisimFile())) return;
+
+    proj.doAction(LogisimFileActions.addSystemVerilog(content));
     proj.setCurrentHdlModel(content);
   }
 
@@ -249,23 +273,33 @@ public class ProjectCircuitActions {
    * @param initialValue Default suggested value (can be empty if no initial value)
    */
   private static String promptForCircuitName(JFrame frame, Library lib, String initialValue) {
-    return promptForNewName(frame, lib, initialValue, false);
+    return promptForNewName(frame, lib, initialValue, false, false);
   }
 
   private static String promptForVhdlName(JFrame frame, LogisimFile file, String initialValue) {
-    final var name = promptForNewName(frame, file, initialValue, true);
+    final var name = promptForNewName(frame, file, initialValue, true, false);
     if (name == null) return null;
     if (VhdlContent.labelVHDLInvalidNotify(name, file)) return null;
     return name;
   }
 
+  private static String promptForSystemVerilogName(JFrame frame, LogisimFile file, String initialValue) {
+    final var name = promptForNewName(frame, file, initialValue, false, true);
+    if (name == null) return null;
+    if (SystemVerilogContent.labelSystemVerilogInvalidNotify(name, file)) return null;
+    return name;
+  }
+
   private static String promptForNewName(
-      JFrame frame, Library lib, String initialValue, boolean vhdl) {
+      JFrame frame, Library lib, String initialValue, boolean vhdl, boolean systemVerilog) {
     String title;
     String prompt;
     if (vhdl) {
       title = S.get("vhdlNameDialogTitle");
       prompt = S.get("vhdlNamePrompt");
+    } else if (systemVerilog) {
+      title = S.get("systemVerilogNameDialogTitle");
+      prompt = S.get("systemVerilogNamePrompt");
     } else {
       title = S.get("circuitNameDialogTitle");
       prompt = S.get("circuitNamePrompt");

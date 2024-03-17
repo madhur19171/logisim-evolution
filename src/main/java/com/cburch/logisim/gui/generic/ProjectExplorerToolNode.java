@@ -15,10 +15,10 @@ import com.cburch.logisim.circuit.CircuitListener;
 import com.cburch.logisim.circuit.SubcircuitFactory;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Tool;
-import com.cburch.logisim.vhdl.base.HdlModel;
-import com.cburch.logisim.vhdl.base.HdlModelListener;
-import com.cburch.logisim.vhdl.base.VhdlContent;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.base.HdlModel;
+import com.cburch.logisim.hdl.base.HdlModelListener;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 
 /**
  * Code taken from Cornell's version of Logisim: http://www.cs.cornell.edu/courses/cs3410/2015sp/

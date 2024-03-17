@@ -47,7 +47,7 @@ public abstract class DownloadBase {
   protected double preMultiplier = 1.0;
   protected double preDivider = 1.0;
   static final String[] HDLPaths = {
-    HdlGeneratorFactory.VERILOG.toLowerCase(),
+    HdlGeneratorFactory.SYSTEM_VERILOG.toLowerCase(),
     HdlGeneratorFactory.VHDL.toLowerCase(),
     "scripts",
     "sandbox",

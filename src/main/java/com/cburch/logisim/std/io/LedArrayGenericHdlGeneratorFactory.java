@@ -222,7 +222,7 @@ public class LedArrayGenericHdlGeneratorFactory {
               FpgaClockFrequency,
               isActiveLow).getWithIndent());
     }
-    if (Hdl.isVerilog()) componentMap.add("   array{{1}}", identifier);
+    if (Hdl.isSystemVerilog()) componentMap.add("   array{{1}}", identifier);
     switch (typeId) {
       case LedArrayDriving.LED_DEFAULT -> {
         componentMap.add(LedArrayLedDefaultHdlGeneratorFactory.getPortMap(identifier));

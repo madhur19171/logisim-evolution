@@ -83,8 +83,12 @@ public class MainMenuListener extends MenuListener {
         ProjectCircuitActions.doAddCircuit(proj);
       } else if (src == LogisimMenuBar.ADD_VHDL) {
         ProjectCircuitActions.doAddVhdl(proj);
+      } else if (src == LogisimMenuBar.ADD_SYSTEM_VERILOG) {
+        ProjectCircuitActions.doAddSystemVerilog(proj);
       } else if (src == LogisimMenuBar.IMPORT_VHDL) {
         ProjectCircuitActions.doImportVhdl(proj);
+      } else if (src == LogisimMenuBar.IMPORT_SYSTEM_VERILOG) {
+        ProjectCircuitActions.doImportSystemVerilog(proj);
       } else if (src == LogisimMenuBar.MOVE_CIRCUIT_UP) {
         ProjectCircuitActions.doMoveCircuit(proj, cur, -1);
       } else if (src == LogisimMenuBar.MOVE_CIRCUIT_DOWN) {

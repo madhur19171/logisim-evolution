@@ -26,14 +26,15 @@ import com.cburch.logisim.gui.main.SelectionActions;
 import com.cburch.logisim.gui.opts.OptionsFrame;
 import com.cburch.logisim.gui.test.TestFrame;
 import com.cburch.logisim.gui.test.TestThread;
+import com.cburch.logisim.hdl.SystemVerilog.sim.SystemVerilogSimulatorTop;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.CollectionUtil;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 import com.cburch.logisim.util.JFileChoosers;
-import com.cburch.logisim.vhdl.base.HdlModel;
-import com.cburch.logisim.vhdl.sim.VhdlSimulatorTop;
+import com.cburch.logisim.hdl.base.HdlModel;
+import com.cburch.logisim.hdl.vhdl.sim.VhdlSimulatorTop;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,6 +85,7 @@ public class Project {
 
   private final Simulator simulator = new Simulator();
   private VhdlSimulatorTop vhdlSimulator = null;
+  private SystemVerilogSimulatorTop systemVerilogSimulator = null;
 
   private LogisimFile file;
   private HdlModel hdlModel;
@@ -370,6 +372,12 @@ public class Project {
     if (vhdlSimulator == null) vhdlSimulator = new VhdlSimulatorTop(this);
 
     return vhdlSimulator;
+  }
+
+  public SystemVerilogSimulatorTop getSystemVerilogSimulator() {
+    if (systemVerilogSimulator == null) systemVerilogSimulator = new SystemVerilogSimulatorTop(this);
+
+    return systemVerilogSimulator;
   }
 
   public boolean isFileDirty() {

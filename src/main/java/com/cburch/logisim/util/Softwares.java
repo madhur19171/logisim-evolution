@@ -231,4 +231,82 @@ public final class Softwares {
 
     return SUCCESS;
   }
+
+  public static int validateSystemVerilog(String systemVerilog, StringBuilder title, StringBuilder result) {
+    if (!AppPreferences.QUESTA_VALIDATION.get()) return SUCCESS;
+
+    final var questaPath = getQuestaPath();
+
+    if (questaPath == null) {
+      result.append(S.get("questaValidationAbordedMessage"));
+      title.append(S.get("questaValidationAbordedTitle"));
+      return ABORT;
+    }
+
+    BufferedReader reader = null;
+    File tmp = null;
+
+    try {
+      tmp = FileUtil.createTmpFile(systemVerilog, "tmp", ".sv");
+      final var tmpDir = new File(tmp.getParentFile().getCanonicalPath());
+
+      if (!createWorkLibrary(tmpDir, questaPath, result)) {
+        title.insert(0, S.get("questaLibraryErrorTitle"));
+        result.insert(0, System.getProperty("line.separator"));
+        result.insert(0, S.get("questaLibraryErrorMessage"));
+        return ERROR;
+      }
+
+      List<String> command = new ArrayList<>();
+      command.add(FileUtil.correctPath(questaPath) + QUESTA_BIN[VCOM]);
+      command.add("-reportprogress");
+      command.add("300");
+      command.add("-93");
+      command.add("-work");
+      command.add("work");
+      command.add(tmp.getName());
+
+      final var questa = new ProcessBuilder(command);
+      questa.directory(tmpDir);
+      Process vcom = questa.start();
+
+      final var is = vcom.getInputStream();
+      final var isr = new InputStreamReader(is);
+      reader = new BufferedReader(isr);
+
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+        result.append(System.getProperty("line.separator"));
+      }
+
+      if (vcom.waitFor() != 0) {
+        title.insert(0, S.get("questaValidationFailedTitle"));
+        result.insert(0, System.getProperty("line.separator"));
+        result.insert(0, S.get("questaValidationFailedMessage"));
+        return ERROR;
+      }
+    } catch (IOException e) {
+      title.insert(0, S.get("questaValidationFailedTitle"));
+      result.replace(0, result.length(), e.getMessage());
+      result.insert(0, System.getProperty("line.separator"));
+      result.insert(0, S.get("questaValidationIoException"));
+      return ERROR;
+    } catch (InterruptedException e) {
+      title.insert(0, S.get("questaValidationFailedTitle"));
+      result.replace(0, result.length(), e.getMessage());
+      result.insert(0, System.getProperty("line.separator"));
+      result.insert(0, S.get("questaValidationInterrupted"));
+      return ERROR;
+    } finally {
+      try {
+        if (tmp != null) tmp.deleteOnExit();
+        if (reader != null) reader.close();
+      } catch (IOException ex) {
+        Logger.getLogger(Softwares.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return SUCCESS;
+  }
 }

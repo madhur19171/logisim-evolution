@@ -50,7 +50,7 @@ import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.StringGetter;
-import com.cburch.logisim.vhdl.base.HdlModel;
+import com.cburch.logisim.hdl.base.HdlModel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;

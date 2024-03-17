@@ -20,7 +20,7 @@ import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.prefs.AppPreferences;
-import com.cburch.logisim.std.hdl.VhdlContentComponent;
+import com.cburch.logisim.std.hdl.vhdl.VhdlContentComponent;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.StringUtil;
 import java.awt.Color;

@@ -9,7 +9,7 @@
 
 package com.cburch.logisim.std.hdl;
 
-import static com.cburch.logisim.vhdl.Strings.S;
+import static com.cburch.logisim.hdl.vhdl.Strings.S;
 
 import com.cburch.contracts.BaseDocumentListenerContract;
 import com.cburch.hdl.HdlFile;

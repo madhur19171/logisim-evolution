@@ -18,6 +18,8 @@ import com.cburch.logisim.circuit.CircuitListener;
 import com.cburch.logisim.circuit.SubcircuitFactory;
 import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.gui.generic.OptionPane;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogContent;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogModule;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.Projects;
@@ -27,8 +29,8 @@ import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 import com.cburch.logisim.util.UniquelyNamedThread;
-import com.cburch.logisim.vhdl.base.VhdlContent;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -326,6 +328,16 @@ public class LogisimFile extends Library implements LibraryEventSource, CircuitL
     fireEvent(LibraryEvent.ADD_TOOL, tool);
   }
 
+  public void addSystemVerilogContent(SystemVerilogContent content) {
+    addSystemVerilogContent(content, tools.size());
+  }
+
+  public void addSystemVerilogContent(SystemVerilogContent content, int index) {
+    final var tool = new AddTool(new SystemVerilogModule(content));
+    tools.add(index, tool);
+    fireEvent(LibraryEvent.ADD_TOOL, tool);
+  }
+
   public void addLibrary(Library lib) {
     if (!lib.getName().equals(BaseLibrary._ID)) {
       for (final var tool : lib.getTools()) {
@@ -520,6 +532,18 @@ public class LogisimFile extends Library implements LibraryEventSource, CircuitL
     return -1;
   }
 
+  public int indexOfSystemVerilog(SystemVerilogContent systemVerilog) {
+    for (var i = 0; i < tools.size(); i++) {
+      final var tool = tools.get(i);
+      if (tool.getFactory() instanceof SystemVerilogModule factory) {
+        if (factory.getContent() == systemVerilog) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
   @Override
   public List<Library> getLibraries() {
     return libraries;
@@ -622,6 +646,14 @@ public class LogisimFile extends Library implements LibraryEventSource, CircuitL
     if (index >= 0) {
       final Tool vhdlTool = tools.remove(index);
       fireEvent(LibraryEvent.REMOVE_TOOL, vhdlTool);
+    }
+  }
+
+  public void removeSystemVerilog(SystemVerilogContent systemVerilog) {
+    final var index = indexOfSystemVerilog(systemVerilog);
+    if (index >= 0) {
+      final Tool systemVerilogTool = tools.remove(index);
+      fireEvent(LibraryEvent.REMOVE_TOOL, systemVerilogTool);
     }
   }
 

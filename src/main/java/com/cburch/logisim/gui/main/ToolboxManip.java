@@ -32,7 +32,7 @@ import com.cburch.logisim.tools.EditTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.PokeTool;
 import com.cburch.logisim.tools.Tool;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import javax.swing.JPopupMenu;
 
 class ToolboxManip implements ProjectExplorer.Listener {

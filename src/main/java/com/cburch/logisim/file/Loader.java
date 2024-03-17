@@ -17,7 +17,7 @@ import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.util.JFileChoosers;
 import com.cburch.logisim.util.LineBuffer;
 import com.cburch.logisim.util.ZipClassLoader;
-import com.cburch.logisim.vhdl.file.HdlFile;
+import com.cburch.logisim.hdl.file.HdlFile;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
@@ -577,7 +577,7 @@ public class Loader implements LibraryLoader {
   public String vhdlImportChooser(Component window) {
     final var chooser = createChooser();
     chooser.setFileFilter(Loader.VHDL_FILTER);
-    chooser.setDialogTitle(com.cburch.logisim.vhdl.Strings.S.get("hdlOpenDialog"));
+    chooser.setDialogTitle(com.cburch.logisim.hdl.vhdl.Strings.S.get("hdlOpenDialog"));
     final var returnVal = chooser.showOpenDialog(window);
     if (returnVal != JFileChooser.APPROVE_OPTION) return null;
     final var selected = chooser.getSelectedFile();
@@ -587,6 +587,23 @@ public class Loader implements LibraryLoader {
     } catch (IOException e) {
       OptionPane.showMessageDialog(
           window, e.getMessage(), S.get("hexOpenErrorTitle"), OptionPane.ERROR_MESSAGE);
+      return null;
+    }
+  }
+
+  public String systemVerilogImportChooser(Component window) {
+    final var chooser = createChooser();
+    chooser.setFileFilter(Loader.VHDL_FILTER);  // TODO: Have a Verilog filter
+    chooser.setDialogTitle(com.cburch.logisim.hdl.vhdl.Strings.S.get("hdlOpenDialog"));
+    final var returnVal = chooser.showOpenDialog(window);
+    if (returnVal != JFileChooser.APPROVE_OPTION) return null;
+    final var selected = chooser.getSelectedFile();
+    if (selected == null) return null;
+    try {
+      return HdlFile.load(selected);
+    } catch (IOException e) {
+      OptionPane.showMessageDialog(
+              window, e.getMessage(), S.get("hexOpenErrorTitle"), OptionPane.ERROR_MESSAGE);
       return null;
     }
   }

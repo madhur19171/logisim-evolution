@@ -21,6 +21,7 @@ import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.gui.generic.OptionPane;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogContent;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectActions;
@@ -29,7 +30,7 @@ import com.cburch.logisim.std.wiring.Pin;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.LibraryTools;
-import com.cburch.logisim.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,6 +61,29 @@ public final class LogisimFileActions {
     @Override
     public void undo(Project proj) {
       proj.getLogisimFile().removeCircuit(circuit);
+    }
+  }
+
+  private static class AddSystemVerilog extends Action {
+    private final SystemVerilogContent systemVerilog;
+
+    AddSystemVerilog(SystemVerilogContent systemVerilog) {
+      this.systemVerilog = systemVerilog;
+    }
+
+    @Override
+    public void doIt(Project proj) {
+      proj.getLogisimFile().addSystemVerilogContent(systemVerilog);
+    }
+
+    @Override
+    public String getName() {
+      return S.get("addSystemVerilogAction");
+    }
+
+    @Override
+    public void undo(Project proj) {
+      proj.getLogisimFile().removeSystemVerilog(systemVerilog);
     }
   }
 
@@ -544,6 +568,31 @@ public final class LogisimFileActions {
     }
   }
 
+  private static class RemoveSystemVerilog extends Action {
+    private final SystemVerilogContent systemVerilog;
+    private int index;
+
+    RemoveSystemVerilog(SystemVerilogContent systemVerilog) {
+      this.systemVerilog = systemVerilog;
+    }
+
+    @Override
+    public void doIt(Project proj) {
+      index = proj.getLogisimFile().indexOfSystemVerilog(systemVerilog);
+      proj.getLogisimFile().removeSystemVerilog(systemVerilog);
+    }
+
+    @Override
+    public String getName() {
+      return S.get("removeSystemVerilogAction");
+    }
+
+    @Override
+    public void undo(Project proj) {
+      proj.getLogisimFile().addSystemVerilogContent(systemVerilog, index);
+    }
+  }
+
   private static class RemoveVhdl extends Action {
     private final VhdlContent vhdl;
     private int index;
@@ -714,6 +763,10 @@ public final class LogisimFileActions {
     return new AddVhdl(vhdl);
   }
 
+  public static Action addSystemVerilog(SystemVerilogContent systemVerilog) {
+    return new AddSystemVerilog(systemVerilog);
+  }
+
   public static Action addCircuit(Circuit circuit) {
     return new AddCircuit(circuit);
   }
@@ -740,6 +793,10 @@ public final class LogisimFileActions {
 
   public static Action removeVhdl(VhdlContent vhdl) {
     return new RemoveVhdl(vhdl);
+  }
+
+  public static Action removeSystemVerilog(SystemVerilogContent systemVerilog) {
+    return new RemoveSystemVerilog(systemVerilog);
   }
 
   public static Action revertDefaults() {

@@ -29,7 +29,7 @@ import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.SetAttributeAction;
 import com.cburch.logisim.util.AutoLabel;
-import com.cburch.logisim.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
 import java.util.TreeSet;
 
 class AttrTableSelectionModel extends AttributeSetTableModel implements Selection.Listener {

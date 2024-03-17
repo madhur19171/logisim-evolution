@@ -16,7 +16,7 @@ import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.util.StringGetter;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

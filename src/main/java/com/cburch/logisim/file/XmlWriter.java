@@ -30,7 +30,7 @@ import com.cburch.logisim.util.InputEventUtil;
 import com.cburch.logisim.util.LineBuffer;
 import com.cburch.logisim.util.StringUtil;
 import com.cburch.logisim.util.XmlUtil;
-import com.cburch.logisim.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;

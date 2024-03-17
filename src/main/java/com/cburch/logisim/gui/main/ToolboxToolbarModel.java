@@ -26,6 +26,7 @@ class ToolboxToolbarModel extends AbstractToolbarModel implements MenuListener.E
   private final Frame frame;
   private final LogisimToolbarItem itemAdd;
   private final LogisimToolbarItem itemAddVhdl;
+  private final LogisimToolbarItem itemAddSystemVerilog;
   private final LogisimToolbarItem itemUp;
   private final LogisimToolbarItem itemDown;
   private final LogisimToolbarItem itemAppearance;
@@ -42,7 +43,10 @@ class ToolboxToolbarModel extends AbstractToolbarModel implements MenuListener.E
             S.getter("projectAddCircuitTip"));
     itemAddVhdl =
         new LogisimToolbarItem(
-            menu, new ProjectAddIcon(), LogisimMenuBar.ADD_VHDL, S.getter("projectAddVhdlItem"));
+            menu, new ProjectAddIcon(true, false), LogisimMenuBar.ADD_VHDL, S.getter("projectAddVhdlItem"));
+    itemAddSystemVerilog =
+            new LogisimToolbarItem(
+                    menu, new ProjectAddIcon(false, true), LogisimMenuBar.ADD_SYSTEM_VERILOG, S.getter("projectAddSystemVerilogItem"));
     itemUp =
         new LogisimToolbarItem(
             menu,
@@ -71,7 +75,7 @@ class ToolboxToolbarModel extends AbstractToolbarModel implements MenuListener.E
     items =
         UnmodifiableList.create(
             new ToolbarItem[] {
-              itemAdd, itemAddVhdl, itemUp, itemDown, itemAppearance, itemDelete,
+              itemAdd, itemAddVhdl, itemAddSystemVerilog, itemUp, itemDown, itemAppearance, itemDelete,
             });
 
     menu.addEnabledListener(this);

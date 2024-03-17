@@ -15,7 +15,7 @@ import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.std.hdl.HdlContent;
 import com.cburch.logisim.std.hdl.HdlContentEditor;
-import com.cburch.logisim.std.hdl.VhdlContentComponent;
+import com.cburch.logisim.std.hdl.vhdl.VhdlContentComponent;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;

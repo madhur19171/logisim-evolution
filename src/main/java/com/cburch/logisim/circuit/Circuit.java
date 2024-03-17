@@ -49,7 +49,7 @@ import com.cburch.logisim.util.AutoLabel;
 import com.cburch.logisim.util.CollectionUtil;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 import com.cburch.logisim.util.StringUtil;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collection;

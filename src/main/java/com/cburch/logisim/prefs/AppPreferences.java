@@ -495,7 +495,7 @@ public class AppPreferences {
       create(
           new PrefMonitorStringOpts(
               "afterAdd",
-              new String[] {HdlGeneratorFactory.VHDL, HdlGeneratorFactory.VERILOG},
+              new String[] {HdlGeneratorFactory.VHDL, HdlGeneratorFactory.SYSTEM_VERILOG},
               HdlGeneratorFactory.VHDL));
   public static final PrefMonitor<String> SelectedBoard =
       create(new PrefMonitorString("SelectedBoard", null));
@@ -508,6 +508,9 @@ public class AppPreferences {
       create(new PrefMonitorBoolean("NoOpenPinWarnings", false));
   public static final PrefMonitor<Boolean> VhdlKeywordsUpperCase =
       create(new PrefMonitorBoolean("VhdlKeywordsUpperCase", true));
+
+  public static final PrefMonitor<Boolean> SystemVerilogKeywordsUpperCase =
+          create(new PrefMonitorBoolean("SystemVerilogKeywordsUpperCase", true));
   //file preferences
   public static final PrefMonitor<Boolean> REMOVE_UNUSED_LIBRARIES =
       create(new PrefMonitorBoolean("removeUnusedLibs", false));

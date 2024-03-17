@@ -126,7 +126,7 @@ public class CircuitHdlGeneratorFactory extends AbstractHdlGeneratorFactory {
         if (worker == null) {
           // FIXME: hardcoded string
           Reporter.report.addFatalError(
-              "INTERNAL ERROR: Cannot find the VHDL generator factory for component "
+              "INTERNAL ERROR: Cannot find the System Verilog generator factory for component "
                   + componentName);
           return false;
         }
@@ -163,7 +163,7 @@ public class CircuitHdlGeneratorFactory extends AbstractHdlGeneratorFactory {
       if (worker == null) {
         // FIXME: hardcoded string
         Reporter.report.addFatalError(
-            "INTERNAL ERROR: Unable to get a subcircuit VHDL generator for '"
+            "INTERNAL ERROR: Unable to get a subcircuit System Verilog generator for '"
                 + thisCircuit.getComponent().getFactory().getName()
                 + "'");
         return false;
@@ -456,14 +456,14 @@ public class CircuitHdlGeneratorFactory extends AbstractHdlGeneratorFactory {
             continue;
           }
           if (!map.isMapped(compPin) || map.isOpenMapped(compPin)) {
-            if (Hdl.isVhdl())
+            if (Hdl.isSystemVerilog())
               portMap.put(LineBuffer.formatHdl("{{1}}{{<}}{{2}}{{>}}", LOCAL_INOUT_BUBBLE_BUS_NAME, i), "OPEN");
             else {
               if (vector.length() != 0) vector.append(",");
               vector.append("OPEN"); // still not found the correct method but this seems to work
             }
           } else {
-            if (Hdl.isVhdl())
+            if (Hdl.isSystemVerilog())
               portMap.put(LineBuffer.formatHdl("{{1}}{{<}}{{2}}{{>}}", LOCAL_INOUT_BUBBLE_BUS_NAME, i),
                   (map.isExternalInverted(compPin) ? "n_" : "") + map.getHdlString(compPin));
             else {
@@ -474,7 +474,7 @@ public class CircuitHdlGeneratorFactory extends AbstractHdlGeneratorFactory {
             }
           }
         }
-        if (Hdl.isVerilog())
+        if (Hdl.isSystemVerilog())
           portMap.put(LOCAL_INOUT_BUBBLE_BUS_NAME, vector.toString());
       } else {
         portMap.put(LOCAL_INOUT_BUBBLE_BUS_NAME, LOCAL_INOUT_BUBBLE_BUS_NAME + getBubbleIndex(componentInfo, bubbleType.INOUT));

@@ -58,7 +58,9 @@ public class LogisimMenuBar extends JMenuBar {
     REMOVE_CONTROL,
   };
   public static final LogisimMenuItem ADD_VHDL = new LogisimMenuItem("AddVhdl");
+  public static final LogisimMenuItem ADD_SYSTEM_VERILOG = new LogisimMenuItem("AddSystemVerilog");
   public static final LogisimMenuItem IMPORT_VHDL = new LogisimMenuItem("ImportVhdl");
+  public static final LogisimMenuItem IMPORT_SYSTEM_VERILOG = new LogisimMenuItem("ImportSystemVerilog");
   public static final LogisimMenuItem ADD_CIRCUIT = new LogisimMenuItem("AddCircuit");
   public static final LogisimMenuItem MOVE_CIRCUIT_UP = new LogisimMenuItem("MoveCircuitUp");
   public static final LogisimMenuItem MOVE_CIRCUIT_DOWN = new LogisimMenuItem("MoveCircuitDown");
@@ -79,6 +81,11 @@ public class LogisimMenuBar extends JMenuBar {
       new LogisimMenuItem("SimulateVhdlEnable");
   public static final LogisimMenuItem GENERATE_VHDL_SIM_FILES =
       new LogisimMenuItem("GenerateVhdlSimFiles");
+
+  public static final LogisimMenuItem SIMULATE_SYSTEM_VERILOG_ENABLE =
+          new LogisimMenuItem("SimulateSystemVerilogEnable");
+  public static final LogisimMenuItem GENERATE_SYSTEM_VERILOG_SIM_FILES =
+          new LogisimMenuItem("GenerateSystemVerilogSimFiles");
   public static final LogisimMenuItem TICK_ENABLE = new LogisimMenuItem("TickEnable");
   public static final LogisimMenuItem TICK_HALF = new LogisimMenuItem("TickHalf");
   public static final LogisimMenuItem TICK_FULL = new LogisimMenuItem("TickFull");

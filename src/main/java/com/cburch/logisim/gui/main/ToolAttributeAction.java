@@ -25,7 +25,7 @@ import com.cburch.logisim.tools.FactoryAttributes;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.tools.key.KeyConfigurationEvent;
 import com.cburch.logisim.tools.key.KeyConfigurationResult;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 import java.util.HashMap;
 import java.util.Map;
 

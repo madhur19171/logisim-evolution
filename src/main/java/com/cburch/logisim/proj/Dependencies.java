@@ -19,8 +19,8 @@ import com.cburch.logisim.file.LibraryListener;
 import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.util.Dag;
-import com.cburch.logisim.vhdl.base.VhdlContent;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 
 public class Dependencies {
   private class MyListener implements LibraryListener, CircuitListener {

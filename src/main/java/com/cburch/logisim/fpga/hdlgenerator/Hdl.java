@@ -41,8 +41,8 @@ public class Hdl {
     return AppPreferences.HdlType.get().equals(HdlGeneratorFactory.VHDL);
   }
 
-  public static boolean isVerilog() {
-    return AppPreferences.HdlType.get().equals(HdlGeneratorFactory.VERILOG);
+  public static boolean isSystemVerilog() {
+    return AppPreferences.HdlType.get().equals(HdlGeneratorFactory.SYSTEM_VERILOG);
   }
 
   public static String bracketOpen() {

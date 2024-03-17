@@ -19,7 +19,7 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import com.cburch.logisim.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;

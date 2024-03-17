@@ -88,7 +88,7 @@ public class SevenSegmentScanningGenericHdlGenerator {
                 typeId == SevenSegmentScanningDriving.SEVEN_SEG_SCANNING_ACTIVE_LOW)).getWithIndent();
         break;
     }
-    if (Hdl.isVerilog()) componentMap.add("   sevenSegScan{{1}}", identifier);
+    if (Hdl.isSystemVerilog()) componentMap.add("   sevenSegScan{{1}}", identifier);
     switch (typeId) {
       case SevenSegmentScanningDriving.SEVEN_SEG_DECODED,
         SevenSegmentScanningDriving.SEVEN_SEG_SCANNING_ACTIVE_HI,

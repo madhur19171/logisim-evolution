@@ -113,7 +113,7 @@ public class FileWriter {
       lines.add(headOpen + " ".repeat(headWidth) + headClose);
       lines.add(headOpen + "=".repeat(headWidth) + headClose);
       lines.add("");
-    } else if (Hdl.isVerilog()) {
+    } else if (Hdl.isSystemVerilog()) {
       headWidth = 74;
       headOpen = " **";
       headClose = "**";

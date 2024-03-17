@@ -63,7 +63,7 @@ public class PriorityEncoderHdlGeneratorFactory extends AbstractHdlGeneratorFact
         vectorList.append(Hdl.getNetName(comp, i, true, nets));
       }
     }
-    if (Hdl.isVerilog()) map.put("inputVector", vectorList.toString());
+    if (Hdl.isSystemVerilog()) map.put("inputVector", vectorList.toString());
     map.putAll(Hdl.getNetMap("groupSelect", true, comp, nrOfBits + PriorityEncoder.GS, nets));
     map.putAll(Hdl.getNetMap("enableOut", true, comp, nrOfBits + PriorityEncoder.EN_OUT, nets));
     map.putAll(Hdl.getNetMap("address", true, comp, nrOfBits + PriorityEncoder.OUT, nets));

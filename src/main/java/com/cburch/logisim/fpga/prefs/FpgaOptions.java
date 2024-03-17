@@ -109,7 +109,7 @@ public class FpgaOptions extends OptionsPanel {
             S.getter("HDLLanguageUsed"),
             new PrefOption[] {
               new PrefOption(HdlGeneratorFactory.VHDL, S.getter("VHDL")),
-              new PrefOption(HdlGeneratorFactory.VERILOG, S.getter("Verilog"))
+              new PrefOption(HdlGeneratorFactory.SYSTEM_VERILOG, S.getter("SystemVerilog"))
             });
 
     GridBagLayout layout = new GridBagLayout();

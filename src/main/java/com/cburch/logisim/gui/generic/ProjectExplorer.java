@@ -23,8 +23,8 @@ import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
-import com.cburch.logisim.vhdl.base.VhdlContent;
-import com.cburch.logisim.vhdl.base.VhdlEntity;
+import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
+import com.cburch.logisim.hdl.vhdl.base.VhdlEntity;
 
 import java.awt.Color;
 import java.awt.Font;

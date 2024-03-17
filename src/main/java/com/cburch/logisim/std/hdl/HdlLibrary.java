@@ -9,9 +9,10 @@
 
 package com.cburch.logisim.std.hdl;
 
-import static com.cburch.logisim.vhdl.Strings.S;
+import static com.cburch.logisim.hdl.vhdl.Strings.S;
 
 import com.cburch.logisim.gui.icons.ArithmeticIcon;
+import com.cburch.logisim.std.hdl.vhdl.VhdlEntityComponent;
 import com.cburch.logisim.tools.FactoryDescription;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;

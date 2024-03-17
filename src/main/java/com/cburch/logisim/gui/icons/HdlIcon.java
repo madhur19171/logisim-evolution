@@ -9,7 +9,7 @@
 
 package com.cburch.logisim.gui.icons;
 
-import com.cburch.logisim.vhdl.gui.HdlToolbarModel;
+import com.cburch.logisim.hdl.gui.HdlToolbarModel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
