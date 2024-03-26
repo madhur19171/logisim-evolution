@@ -23,6 +23,7 @@ import com.cburch.logisim.gui.generic.ProjectExplorerToolNode;
 import com.cburch.logisim.gui.menu.Popups;
 import com.cburch.logisim.gui.menu.ProjectCircuitActions;
 import com.cburch.logisim.gui.menu.ProjectLibraryActions;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogModule;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectEvent;
 import com.cburch.logisim.proj.ProjectListener;
@@ -110,6 +111,8 @@ class ToolboxManip implements ProjectExplorer.Listener {
           return Popups.forCircuit(proj, tool, sub.getSubcircuit());
         } else if (source instanceof VhdlEntity vhdlEntity) {
           return Popups.forVhdl(proj, tool, vhdlEntity.getContent());
+        } else if (source instanceof SystemVerilogModule systemVerilogModule) {
+          return Popups.forSystemVerilog(proj, tool, systemVerilogModule.getContent());
         } else {
           return null;
         }

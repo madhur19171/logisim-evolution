@@ -15,6 +15,7 @@ import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.file.LoadedLibrary;
 import com.cburch.logisim.gui.main.Frame;
 import com.cburch.logisim.gui.main.StatisticsDialog;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogContent;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
@@ -35,6 +36,10 @@ public class Popups {
 
   public static JPopupMenu forVhdl(Project proj, AddTool tool, VhdlContent vhdl) {
     return new VhdlPopup(proj, tool, vhdl);
+  }
+
+  public static JPopupMenu forSystemVerilog(Project proj, AddTool tool, SystemVerilogContent systemVerilog) {
+    return new SystemVerilogPopup(proj, tool, systemVerilog);
   }
 
   public static JPopupMenu forLibrary(Project proj, Library lib, boolean isTop) {
@@ -149,6 +154,38 @@ public class Popups {
     }
   }
 
+  private static class SystemVerilogPopup extends JPopupMenu implements ActionListener {
+    private static final long serialVersionUID = 1L;
+
+    final Project proj;
+    final SystemVerilogContent systemVerilog;
+    final JMenuItem edit = new JMenuItem(S.get("projectEditSystemVerilogItem"));
+    final JMenuItem remove = new JMenuItem(S.get("projectRemoveSystemVerilogItem"));
+
+    SystemVerilogPopup(Project proj, Tool tool, SystemVerilogContent systemVerilog) {
+      super(S.get("systemVerilogMenu"));
+      this.proj = proj;
+      this.systemVerilog = systemVerilog;
+      add(edit);
+      edit.addActionListener(this);
+      add(remove);
+      remove.addActionListener(this);
+      edit.setEnabled(systemVerilog != proj.getFrame().getHdlEditorView());
+      boolean canChange = proj.getLogisimFile().contains(systemVerilog);
+      remove.setEnabled(canChange && proj.getDependencies().canRemove(systemVerilog));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      final var source = e.getSource();
+      if (source == edit) {
+        proj.setCurrentHdlModel(systemVerilog);
+      } else if (source == remove) {
+        ProjectCircuitActions.doRemoveSystemVerilog(proj, systemVerilog);
+      }
+    }
+  }
+
   @SuppressWarnings("serial")
   private static class LibraryPopup extends JPopupMenu implements ActionListener {
     final Project proj;
@@ -185,6 +222,7 @@ public class Popups {
     final Project proj;
     final JMenuItem add = new JMenuItem(S.get("projectAddCircuitItem"));
     final JMenuItem vhdl = new JMenuItem(S.get("projectAddVhdlItem"));
+    final JMenuItem systemVerilog = new JMenuItem(S.get("projectAddSystemVerilogItem"));
     final JMenu load = new JMenu(S.get("projectLoadLibraryItem"));
     final JMenuItem loadBuiltin = new JMenuItem(S.get("projectLoadBuiltinItem"));
     final JMenuItem loadLogisim = new JMenuItem(S.get("projectLoadLogisimItem"));
@@ -205,6 +243,8 @@ public class Popups {
       add.addActionListener(this);
       add(vhdl);
       vhdl.addActionListener(this);
+      add(systemVerilog);
+      systemVerilog.addActionListener(this);
       add(load);
     }
 
@@ -215,6 +255,8 @@ public class Popups {
         ProjectCircuitActions.doAddCircuit(proj);
       } else if (src == vhdl) {
         ProjectCircuitActions.doAddVhdl(proj);
+      } else if (src == systemVerilog) {
+        ProjectCircuitActions.doAddSystemVerilog(proj);
       } else if (src == loadBuiltin) {
         ProjectLibraryActions.doLoadBuiltinLibrary(proj);
       } else if (src == loadLogisim) {

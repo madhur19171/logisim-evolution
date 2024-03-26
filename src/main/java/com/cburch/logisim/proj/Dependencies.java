@@ -17,6 +17,7 @@ import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.file.LibraryEvent;
 import com.cburch.logisim.file.LibraryListener;
 import com.cburch.logisim.file.LogisimFile;
+import com.cburch.logisim.hdl.SystemVerilog.base.SystemVerilogContent;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.util.Dag;
 import com.cburch.logisim.hdl.vhdl.base.VhdlContent;
@@ -115,6 +116,10 @@ public class Dependencies {
 
   public boolean canRemove(VhdlContent vhdl) {
     return !depends.hasPredecessors(vhdl);
+  }
+
+  public boolean canRemove(SystemVerilogContent systemVerilog) {
+    return !depends.hasPredecessors(systemVerilog);
   }
 
   private void processCircuit(Circuit circ) {

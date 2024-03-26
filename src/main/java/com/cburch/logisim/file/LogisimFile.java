@@ -409,6 +409,15 @@ public class LogisimFile extends Library implements LibraryEventSource, CircuitL
     return false;
   }
 
+  public boolean contains(SystemVerilogContent content) {
+    for (final var tool : tools) {
+      if (tool.getFactory() instanceof SystemVerilogModule factory) {
+        if (factory.getContent() == content) return true;
+      }
+    }
+    return false;
+  }
+
   public boolean containsFactory(String name) {
     for (final var tool : tools) {
       if (tool.getFactory() instanceof VhdlEntity factory) {

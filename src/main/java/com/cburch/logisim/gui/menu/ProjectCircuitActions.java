@@ -260,6 +260,18 @@ public class ProjectCircuitActions {
     }
   }
 
+  public static void doRemoveSystemVerilog(Project proj, SystemVerilogContent systemVerilog) {
+    if (!proj.getDependencies().canRemove(systemVerilog)) {
+      OptionPane.showMessageDialog(
+              proj.getFrame(),
+              S.get("circuitRemoveUsedError"),
+              S.get("circuitRemoveErrorTitle"),
+              OptionPane.ERROR_MESSAGE);
+    } else {
+      proj.doAction(LogisimFileActions.removeSystemVerilog(systemVerilog));
+    }
+  }
+
   public static void doSetAsMainCircuit(Project proj, Circuit circuit) {
     proj.doAction(LogisimFileActions.setMainCircuit(circuit));
   }

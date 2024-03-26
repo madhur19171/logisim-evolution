@@ -25,6 +25,8 @@ class MenuProject extends Menu {
   private final MenuItemImpl addCircuit = new MenuItemImpl(this, LogisimMenuBar.ADD_CIRCUIT);
   private final MenuItemImpl addVhdl = new MenuItemImpl(this, LogisimMenuBar.ADD_VHDL);
   private final MenuItemImpl importVhdl = new MenuItemImpl(this, LogisimMenuBar.IMPORT_VHDL);
+  private final MenuItemImpl addSystemVerilog = new MenuItemImpl(this, LogisimMenuBar.ADD_SYSTEM_VERILOG);
+  private final MenuItemImpl importSystemVerilog = new MenuItemImpl(this, LogisimMenuBar.IMPORT_SYSTEM_VERILOG);
   private final JMenu loadLibrary = new JMenu();
   private final JMenuItem loadBuiltin = new JMenuItem();
   private final JMenuItem loadLogisim = new JMenuItem();
@@ -56,6 +58,8 @@ class MenuProject extends Menu {
     menubar.registerItem(LogisimMenuBar.ADD_CIRCUIT, addCircuit);
     menubar.registerItem(LogisimMenuBar.ADD_VHDL, addVhdl);
     menubar.registerItem(LogisimMenuBar.IMPORT_VHDL, importVhdl);
+    menubar.registerItem(LogisimMenuBar.ADD_SYSTEM_VERILOG, addSystemVerilog);
+    menubar.registerItem(LogisimMenuBar.IMPORT_SYSTEM_VERILOG, importSystemVerilog);
     loadBuiltin.addActionListener(myListener);
     loadLogisim.addActionListener(myListener);
     loadJar.addActionListener(myListener);
@@ -82,6 +86,8 @@ class MenuProject extends Menu {
     add(addCircuit);
     add(addVhdl);
     add(importVhdl);
+    add(addSystemVerilog);
+    add(importSystemVerilog);
     add(loadLibrary);
     add(unload);
     addSeparator();
@@ -123,6 +129,8 @@ class MenuProject extends Menu {
             || addCircuit.hasListeners()
             || addVhdl.hasListeners()
             || importVhdl.hasListeners()
+            || addSystemVerilog.hasListeners()
+            || importSystemVerilog.hasListeners()
             || moveUp.hasListeners()
             || moveDown.hasListeners()
             || setAsMain.hasListeners()
@@ -140,6 +148,8 @@ class MenuProject extends Menu {
     addCircuit.setText(S.get("projectAddCircuitItem"));
     addVhdl.setText(S.get("projectAddVhdlItem"));
     importVhdl.setText(S.get("projectImportVhdlItem"));
+    addSystemVerilog.setText(S.get("projectAddSystemVerilogItem"));
+    importSystemVerilog.setText(S.get("projectImportSystemVerilogItem"));
     loadLibrary.setText(S.get("projectLoadLibraryItem"));
     loadBuiltin.setText(S.get("projectLoadBuiltinItem"));
     loadLogisim.setText(S.get("projectLoadLogisimItem"));
