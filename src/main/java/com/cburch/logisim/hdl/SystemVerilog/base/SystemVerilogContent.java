@@ -45,7 +45,7 @@ public class SystemVerilogContent extends HdlContent {
 
   public static SystemVerilogContent create(String name, LogisimFile file) {
     final var content = new SystemVerilogContent(name, file);
-    if (!content.setContent(TEMPLATE.replaceAll("%entityname%", name))) content.showErrors();
+    if (!content.setContent(TEMPLATE.replaceAll("%modulename%", name))) content.showErrors();
     return content;
   }
 

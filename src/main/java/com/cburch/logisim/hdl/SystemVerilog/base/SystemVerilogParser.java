@@ -108,6 +108,7 @@ public class SystemVerilogParser {
   private static final Pattern PORTS = Pattern.compile("\\(", Pattern.CASE_INSENSITIVE);
   private static final Pattern OPENLIST = Pattern.compile("\\(", Pattern.CASE_INSENSITIVE);
   private static final Pattern SEMICOLON = Pattern.compile(";", Pattern.CASE_INSENSITIVE);
+  private static final Pattern COMMA = Pattern.compile(",", Pattern.CASE_INSENSITIVE);
   private static final Pattern DONELIST = Pattern.compile("\\)", Pattern.CASE_INSENSITIVE);
   private static final Pattern PARAMETERS = Pattern.compile("#\\s*\\((.*?)\\)", Pattern.CASE_INSENSITIVE);
   private static final Pattern PARAMETER = Pattern.compile("parameter\\s+(\\w+)\\s*=\\s*([^,\\)]+)", Pattern.CASE_INSENSITIVE);
@@ -194,7 +195,8 @@ public class SystemVerilogParser {
     // Example: "output reg data_out"
     // Example: "inout wire signal"
 
-    if (input.findWithinHorizon(PORT, 0) == null) throw new IllegalSystemVerilogContentException(S.get("portDeclarationException"));
+    String portString = input.findWithinHorizon(PORT, 0);
+    if (portString == null) throw new IllegalSystemVerilogContentException(S.get("portDeclarationException"));
 
     String direction = input.match().group(1).trim();
     String type = input.match().group(2) != null ? input.match().group(2).trim() : "wire";
@@ -202,7 +204,7 @@ public class SystemVerilogParser {
     String names = input.match().group(4).trim();
 
     int width = 1;
-    if (range != null) {
+    if (!range.isEmpty() && range != null) {  // TODO: Range not parsing correctly
       // Example range: "[7:0]"
       String[] bounds = range.split(":");
       int upper = Integer.parseInt(bounds[0].replaceAll("[\\[\\]]", ""));
@@ -229,7 +231,7 @@ public class SystemVerilogParser {
     if (input.findWithinHorizon(OPENLIST, 0) == null)
       throw new IllegalSystemVerilogContentException(S.get("portDeclarationException"));
     parsePort(input);
-    while (input.findWithinHorizon(SEMICOLON, 0) != null) parsePort(input);
+    while (input.findWithinHorizon(COMMA, 0) != null) parsePort(input);
     if (input.findWithinHorizon(DONELIST, 0) == null)
       throw new IllegalSystemVerilogContentException(S.get("portDeclarationException"));
   }

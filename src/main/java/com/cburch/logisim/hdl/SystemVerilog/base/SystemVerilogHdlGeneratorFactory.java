@@ -42,8 +42,7 @@ public class SystemVerilogHdlGeneratorFactory extends AbstractHdlGeneratorFactor
         new ArrayList<>(FileWriter.getGenerateRemark(componentName, theNetlist.projName()));
 
     SystemVerilogContent content = ((SystemVerilogModuleAttributes) attrs).getContent();
-    contents.add(content.getLibraries());
-    contents.add(content.getArchitecture());
+    contents.add(content.getPackages());
 
     return contents;
   }
