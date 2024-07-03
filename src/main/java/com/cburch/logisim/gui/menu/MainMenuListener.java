@@ -142,6 +142,8 @@ public class MainMenuListener extends MenuListener {
       menubar.setEnabled(LogisimMenuBar.ADD_CIRCUIT, true);
       menubar.setEnabled(LogisimMenuBar.ADD_VHDL, true);
       menubar.setEnabled(LogisimMenuBar.IMPORT_VHDL, true);
+      menubar.setEnabled(LogisimMenuBar.ADD_SYSTEM_VERILOG, true);
+      menubar.setEnabled(LogisimMenuBar.IMPORT_SYSTEM_VERILOG, true);
       menubar.setEnabled(LogisimMenuBar.MOVE_CIRCUIT_UP, canMoveUp);
       menubar.setEnabled(LogisimMenuBar.MOVE_CIRCUIT_DOWN, canMoveDown);
       menubar.setEnabled(LogisimMenuBar.SET_MAIN_CIRCUIT, canSetMain);
@@ -217,6 +219,8 @@ public class MainMenuListener extends MenuListener {
       menubar.addActionListener(LogisimMenuBar.ADD_CIRCUIT, this);
       menubar.addActionListener(LogisimMenuBar.ADD_VHDL, this);
       menubar.addActionListener(LogisimMenuBar.IMPORT_VHDL, this);
+      menubar.addActionListener(LogisimMenuBar.ADD_SYSTEM_VERILOG, this);
+      menubar.addActionListener(LogisimMenuBar.IMPORT_SYSTEM_VERILOG, this);
       menubar.addActionListener(LogisimMenuBar.MOVE_CIRCUIT_UP, this);
       menubar.addActionListener(LogisimMenuBar.MOVE_CIRCUIT_DOWN, this);
       menubar.addActionListener(LogisimMenuBar.SET_MAIN_CIRCUIT, this);
