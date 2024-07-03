@@ -119,18 +119,13 @@ public class SystemVerilogParser {
   private final List<ParameterDescription> parameters;
   private final String source;
   private String name;
-  private String libraries;
-  private String architecture;
+  private String packages;
 
   public SystemVerilogParser(String source) {
     this.source = source;
     this.inputs = new ArrayList<>();
     this.outputs = new ArrayList<>();
     this.parameters = new ArrayList<>();
-  }
-
-  public String getArchitecture() {
-    return architecture;
   }
 
   private int getEOLIndex(String input, int from) {
@@ -160,8 +155,8 @@ public class SystemVerilogParser {
     return parameters;
   }
 
-  public String getLibraries() {
-    return libraries;
+  public String getPackages() {
+    return packages;
   }
 
   public String getName() {

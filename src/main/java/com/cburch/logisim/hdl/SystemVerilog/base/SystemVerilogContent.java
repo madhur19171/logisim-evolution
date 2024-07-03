@@ -33,13 +33,13 @@ import java.util.logging.Logger;
 
 public class SystemVerilogContent extends HdlContent {
 
-  public static class Generic extends SystemVerilogParser.GenericDescription {
-    public Generic(SystemVerilogParser.GenericDescription g) {
-      super(g.name, g.type, g.dval);
+  public static class Parameter extends SystemVerilogParser.ParameterDescription {
+    public Parameter(SystemVerilogParser.ParameterDescription p) {
+      super(p.name, p.value);
     }
 
-    public Generic(Generic g) {
-      super(g.name, g.type, g.dval);
+    public Parameter(Parameter p) {
+      super(p.name, p.value);
     }
   }
 
@@ -87,11 +87,11 @@ public class SystemVerilogContent extends HdlContent {
   protected StringBuilder content;
   protected boolean valid;
   protected final List<SystemVerilogParser.PortDescription> ports;
-  protected Generic[] generics;
-  protected List<Attribute<Integer>> genericAttrs;
+  protected Parameter[] parameters;
+  protected List<Attribute<Integer>> parameterAttrs;
   protected String name;
   protected AttributeOption appearance = StdAttr.APPEAR_EVOLUTION;
-  protected String libraries;
+  protected String packages;
   protected String architecture;
   private final LogisimFile logiFile;
 
@@ -131,38 +131,32 @@ public class SystemVerilogContent extends HdlContent {
     return valid;
   }
 
-  public String getArchitecture() {
-    if (architecture == null) return "";
-
-    return architecture;
-  }
-
   @Override
   public String getContent() {
     return content.toString();
   }
 
-  public Generic[] getGenerics() {
-    if (generics == null) {
-      return new Generic[0];
+  public Parameter[] getParameters() {
+    if (parameters == null) {
+      return new Parameter[0];
     }
-    return generics;
+    return parameters;
   }
 
-  public List<Attribute<Integer>> getGenericAttributes() {
-    if (genericAttrs == null) {
-      genericAttrs = new ArrayList<>();
-      for (Generic g : getGenerics()) {
-        genericAttrs.add(SystemVerilogModuleAttributes.forGeneric(g));
+  public List<Attribute<Integer>> getParameterAttributes() {
+    if (parameterAttrs == null) {
+      parameterAttrs = new ArrayList<>();
+      for (Parameter p : getParameters()) {
+        parameterAttrs.add(SystemVerilogModuleAttributes.forParameter(p));
       }
     }
-    return genericAttrs;
+    return parameterAttrs;
   }
 
-  public String getLibraries() {
-    if (libraries == null) return "";
+  public String getPackages() {
+    if (packages == null) return "";
 
-    return libraries;
+    return packages;
   }
 
   @Override
@@ -314,39 +308,37 @@ public class SystemVerilogContent extends HdlContent {
       valid = true;
       name = parser.getName();
 
-      libraries = parser.getLibraries();
-      architecture = parser.getArchitecture();
+      packages = parser.getPackages();
 
       ports.clear();
       ports.addAll(parser.getInputs());
       ports.addAll(parser.getOutputs());
 
       // If name and type is unchanged, keep old generic and attribute.
-      final var oldGenerics = generics;
-      final var oldAttrs = genericAttrs;
+      final var oldParameters = parameters;
+      final var oldAttrs = parameterAttrs;
 
-      generics = new Generic[parser.getGenerics().size()];
-      genericAttrs = new ArrayList<>();
+      parameters = new Parameter[parser.getParameters().size()];
+      parameterAttrs = new ArrayList<>();
       var i = 0;
-      for (final var g : parser.getGenerics()) {
+      for (final var p : parser.getParameters()) {
         var found = false;
-        if (oldGenerics != null) {
-          for (var j = 0; j < oldGenerics.length; j++) {
-            final var old = oldGenerics[j];
+        if (oldParameters != null) {
+          for (var j = 0; j < oldParameters.length; j++) {
+            final var old = oldParameters[j];
             if (old != null
-                && old.getName().equals(g.getName())
-                && old.getType().equals(g.getType())) {
-              generics[i] = old;
-              oldGenerics[j] = null;
-              genericAttrs.add(oldAttrs.get(j));
+                && old.getName().equals(p.getName())) {
+              parameters[i] = old;
+              oldParameters[j] = null;
+              parameterAttrs.add(oldAttrs.get(j));
               found = true;
               break;
             }
           }
         }
         if (!found) {
-          generics[i] = new Generic(g);
-          genericAttrs.add(SystemVerilogModuleAttributes.forGeneric(generics[i]));
+          parameters[i] = new Parameter(p);
+          parameterAttrs.add(SystemVerilogModuleAttributes.forParameter(parameters[i]));
         }
         i++;
       }

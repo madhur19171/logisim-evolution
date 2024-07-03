@@ -25,32 +25,32 @@ import java.util.List;
 
 public class SystemVerilogModuleAttributes extends AbstractAttributeSet {
 
-  public static class SystemVerilogGenericAttribute extends Attribute<Integer> {
+  public static class SystemVerilogParameterAttribute extends Attribute<Integer> {
     final int start;
     final int end;
-    final SystemVerilogContent.Generic g;
+    final SystemVerilogContent.Parameter p;
 
-    private SystemVerilogGenericAttribute(String name, StringGetter disp, int start, int end, SystemVerilogContent.Generic generic) {
+    private SystemVerilogParameterAttribute(String name, StringGetter disp, int start, int end, SystemVerilogContent.Parameter parameter) {
       super(name, disp);
       this.start = start;
       this.end = end;
-      this.g = generic;
+      this.p = parameter;
     }
 
-    public SystemVerilogContent.Generic getGeneric() {
-      return g;
+    public SystemVerilogContent.Parameter getParameter() {
+      return p;
     }
 
     @Override
     public java.awt.Component getCellEditor(Integer value) {
-      return super.getCellEditor(value != null ? value : g.getDefaultValue());
+      return super.getCellEditor(value != null ? value : p.getValue());
     }
 
     @Override
     public Integer parse(String value) {
       if (value == null) return null;
       value = value.trim();
-      if (value.length() == 0
+      if (value.isEmpty()
           || value.equals("default")
           || value.equals("(default)")
           || value.equals(toDisplayString(null))) return null;
@@ -62,19 +62,14 @@ public class SystemVerilogModuleAttributes extends AbstractAttributeSet {
 
     @Override
     public String toDisplayString(Integer value) {
-      return value == null ? "(default) " + g.getDefaultValue() : value.toString();
+      return value == null ? "(default) " + p.getValue() : value.toString();
     }
   }
 
-  public static Attribute<Integer> forGeneric(SystemVerilogContent.Generic generic) {
-    final var name = generic.getName();
+  public static Attribute<Integer> forParameter(SystemVerilogContent.Parameter parameter) {
+    final var name = parameter.getName();
     final var disp = StringUtil.constantGetter(name);
-    if (generic.getType().equals("positive"))
-      return new SystemVerilogGenericAttribute("vhdl_" + name, disp, 1, Integer.MAX_VALUE, generic);
-    else if (generic.getType().equals("natural"))
-      return new SystemVerilogGenericAttribute("vhdl_" + name, disp, 0, Integer.MAX_VALUE, generic);
-    else
-      return new SystemVerilogGenericAttribute("vhdl_" + name, disp, Integer.MIN_VALUE, Integer.MAX_VALUE, generic);
+    return new SystemVerilogParameterAttribute("sv_" + name, disp, Integer.MIN_VALUE, Integer.MAX_VALUE, parameter);
   }
 
   private static final List<Attribute<?>> static_attributes =
@@ -88,10 +83,10 @@ public class SystemVerilogModuleAttributes extends AbstractAttributeSet {
           SystemVerilogConstants.SIM_NAME_ATTR);
 
   static AttributeSet createBaseAttrs(SystemVerilogContent content) {
-    final var generic = content.getGenerics();
-    final var genericAttr = content.getGenericAttributes();
-    final var attrs = new Attribute<?>[7 + generic.length];
-    final var value = new Object[7 + generic.length];
+    final var parameters = content.getParameters();
+    final var genericAttr = content.getParameterAttributes();
+    final var attrs = new Attribute<?>[7 + parameters.length];
+    final var value = new Object[7 + parameters.length];
     attrs[0] = SystemVerilogModule.nameAttr;
     value[0] = content.getName();
     attrs[1] = StdAttr.LABEL;
@@ -106,9 +101,9 @@ public class SystemVerilogModuleAttributes extends AbstractAttributeSet {
     value[5] = StdAttr.APPEAR_EVOLUTION;
     attrs[6] = SystemVerilogConstants.SIM_NAME_ATTR;
     value[6] = "";
-    for (var i = 0; i < generic.length; i++) {
+    for (var i = 0; i < parameters.length; i++) {
       attrs[6 + i] = genericAttr.get(i);
-      value[6 + i] = generic[i].getDefaultValue();
+      value[6 + i] = parameters[i].getValue();
     }
     return AttributeSets.fixedSet(attrs, value);
   }
@@ -149,7 +144,7 @@ public class SystemVerilogModuleAttributes extends AbstractAttributeSet {
   }
 
   void updateGenerics() {
-    List<Attribute<Integer>> genericAttrs = content.getGenericAttributes();
+    List<Attribute<Integer>> genericAttrs = content.getParameterAttributes();
     instanceAttrs = new ArrayList<>(6 + genericAttrs.size());
     instanceAttrs.add(SystemVerilogModule.nameAttr);
     instanceAttrs.add(StdAttr.LABEL);
