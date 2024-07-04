@@ -104,7 +104,7 @@ public class SystemVerilogParser {
 
   private static final Pattern MODULE = Pattern.compile("module\\s+(\\w+)", Pattern.CASE_INSENSITIVE);
   private static final Pattern END_MODULE = Pattern.compile("endmodule", Pattern.CASE_INSENSITIVE);
-  private static final Pattern PORT = Pattern.compile("(input|output|inout)\\s+(wire|reg)?\\s*\\[?(\\d*:?\\d*)?\\]?\\s*(\\w+)", Pattern.CASE_INSENSITIVE);
+  private static final Pattern PORT = Pattern.compile("(input|output|inout)\\s+(wire|reg)?\\s*\\[?\\s*(\\d*\\s*:\\s*\\d*)?\\s*\\]?\\s*(\\w+)", Pattern.CASE_INSENSITIVE);
   private static final Pattern PORTS = Pattern.compile("\\(", Pattern.CASE_INSENSITIVE);
   private static final Pattern OPENLIST = Pattern.compile("\\(", Pattern.CASE_INSENSITIVE);
   private static final Pattern SEMICOLON = Pattern.compile(";", Pattern.CASE_INSENSITIVE);
@@ -204,9 +204,9 @@ public class SystemVerilogParser {
     String names = input.match().group(4).trim();
 
     int width = 1;
-    if (!range.isEmpty() && range != null) {  // TODO: Range not parsing correctly
+    if (range != null) {
       // Example range: "[7:0]"
-      String[] bounds = range.split(":");
+      String[] bounds = range.split("\\s*:\\s*");
       int upper = Integer.parseInt(bounds[0].replaceAll("[\\[\\]]", ""));
       int lower = Integer.parseInt(bounds[1].replaceAll("[\\[\\]]", ""));
       width = upper - lower + 1;
